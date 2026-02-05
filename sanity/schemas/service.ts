@@ -1,0 +1,121 @@
+import { defineField, defineType } from 'sanity'
+
+export const service = defineType({
+  name: 'service',
+  title: 'Services',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'id',
+      title: 'Service ID',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'tagline',
+      title: 'Tagline',
+      type: 'string',
+      validation: (Rule) => Rule.required().max(100),
+    }),
+    defineField({
+      name: 'icon',
+      title: 'Icon Name',
+      type: 'string',
+      description: 'Lucide React icon name (e.g., Globe, Search, Palette)',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'problem',
+      title: 'Problem Statement',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
+      name: 'solution',
+      title: 'Solution Statement',
+      type: 'text',
+      rows: 3,
+    }),
+    defineField({
+      name: 'benefits',
+      title: 'Benefits',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'List of key benefits',
+    }),
+    defineField({
+      name: 'bestFor',
+      title: 'Best For',
+      type: 'string',
+      description: 'Who this service is best suited for',
+    }),
+    defineField({
+      name: 'subServices',
+      title: 'Sub-Services',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'name',
+              title: 'Name',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'icon',
+              title: 'Icon Name',
+              type: 'string',
+              description: 'Lucide React icon name',
+            },
+          ],
+        },
+      ],
+    }),
+    defineField({
+      name: 'gradient',
+      title: 'Gradient Classes',
+      type: 'string',
+      description: 'Tailwind gradient classes (e.g., from-accent to-cyan-400)',
+      placeholder: 'from-accent to-cyan-400',
+    }),
+    defineField({
+      name: 'order',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Order in which to display (lower numbers appear first)',
+      initialValue: 0,
+    }),
+    defineField({
+      name: 'featured',
+      title: 'Featured Service',
+      type: 'boolean',
+      description: 'Show this service in featured sections',
+      initialValue: false,
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'tagline',
+    },
+  },
+  orderings: [
+    {
+      title: 'Display Order',
+      name: 'orderAsc',
+      by: [{ field: 'order', direction: 'asc' }],
+    },
+  ],
+})
