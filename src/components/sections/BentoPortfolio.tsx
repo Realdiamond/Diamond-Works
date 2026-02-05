@@ -24,7 +24,7 @@ const BentoPortfolio = () => {
             <span className="text-gradient">Delivered</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Real businesses. Real results. See how we've transformed digital presences into revenue-generating machines.
+            Explore our portfolio of custom websites, branding projects, and digital campaigns that helped businesses scale.
           </p>
         </div>
 

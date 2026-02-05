@@ -66,10 +66,10 @@ const Hero = () => {
 
             {/* Headline */}
             <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight animate-slide-up">
-              We Build Websites That
+              Your Complete
               <br />
               <span className="relative inline-block">
-                <span className="text-gradient">Increase Revenue by 3x</span>
+                <span className="text-gradient">Digital Growth Partner</span>
                 <svg 
                   className="absolute -bottom-2 left-0 w-full h-3" 
                   viewBox="0 0 300 12" 
@@ -94,7 +94,7 @@ const Hero = () => {
 
             {/* Subheadline */}
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed animate-slide-up max-w-xl" style={{ animationDelay: "0.1s" }}>
-              Strategic web design, development, and SEO that transforms visitors into customers. Trusted by 50+ businesses to deliver measurable growth.
+              Web design, development, SEO, and digital marketing that transforms your business. From strategy to execution, we deliver measurable growth.
             </p>
 
             {/* CTAs */}
