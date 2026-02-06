@@ -1,10 +1,7 @@
-"use client";
-
-import { useState } from "react";
 import Layout from "@/components/layout/Layout";
+import ContactForm from "@/components/ContactForm";
+import FAQ from "@/components/sections/FAQ";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { 
   Mail, 
   Phone, 
@@ -13,77 +10,10 @@ import {
   CheckCircle, 
   ArrowRight,
   Calendar,
-  Send,
   Sparkles
 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    service: "",
-    message: "",
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        toast({
-          title: "Message sent successfully!",
-          description: "We'll get back to you within 24 hours.",
-        });
-
-        setFormData({
-          name: "",
-          email: "",
-          company: "",
-          service: "",
-          message: "",
-        });
-      } else {
-        toast({
-          title: "Failed to send message",
-          description: data.error || "Please try again later.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Failed to send message",
-        description: "Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
   return (
     <Layout>
       {/* Hero */}
@@ -120,108 +50,7 @@ const Contact = () => {
               <h2 className="font-heading text-2xl font-bold text-foreground mb-6">
                 Send Us a Message
               </h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                      Your Name *
-                    </label>
-                    <Input
-                      id="name"
-                      name="name"
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="John Smith"
-                      className="bg-secondary border-border/50 focus:border-accent"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                      Email Address *
-                    </label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="john@company.com"
-                      className="bg-secondary border-border/50 focus:border-accent"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
-                    Company Name
-                  </label>
-                  <Input
-                    id="company"
-                    name="company"
-                    type="text"
-                    value={formData.company}
-                    onChange={handleChange}
-                    placeholder="Your Company"
-                    className="bg-secondary border-border/50 focus:border-accent"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="service" className="block text-sm font-medium text-foreground mb-2">
-                    Service Interested In
-                  </label>
-                  <select
-                    id="service"
-                    name="service"
-                    value={formData.service}
-                    onChange={handleChange}
-                    className="w-full h-11 px-4 rounded-xl border border-border/50 bg-secondary text-foreground focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
-                  >
-                    <option value="">Select a service</option>
-                    <option value="web-development">Web Design & Development</option>
-                    <option value="seo">SEO & Online Visibility</option>
-                    <option value="design">Brand & Visual Design</option>
-                    <option value="growth">Growth & Optimization</option>
-                    <option value="other">Not sure / Other</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                    Tell Us About Your Project *
-                  </label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={5}
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="What are you looking to achieve? What challenges are you facing?"
-                    className="bg-secondary border-border/50 focus:border-accent"
-                  />
-                </div>
-
-                <Button 
-                  type="submit" 
-                  variant="hero" 
-                  size="lg" 
-                  className="w-full"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      Send Message
-                      <Send className="w-4 h-4" />
-                    </>
-                  )}
-                </Button>
-              </form>
+              <ContactForm />
             </div>
 
             {/* Contact Info */}
@@ -282,6 +111,9 @@ const Contact = () => {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <FAQ />
     </Layout>
   );
 };
