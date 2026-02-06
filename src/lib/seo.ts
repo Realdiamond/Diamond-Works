@@ -19,7 +19,7 @@ export interface SEOProps {
 const siteConfig = {
   name: 'RealDiamond Digital',
   description: 'Strategic web design, development, SEO, and digital marketing that transforms your business. From strategy to execution, we deliver measurable growth.',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://realdiamondworks.com',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://realdiamond-digital.vercel.app',
   ogImage: '/og-image.png',
   links: {
     twitter: 'https://twitter.com/realdiamonddigital',

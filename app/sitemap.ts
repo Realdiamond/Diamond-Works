@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { client } from '@/sanity/lib/client';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://realdiamondworks.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://realdiamond-digital.vercel.app';
 
   // Get all blog posts
   const blogPosts = await client.fetch(`

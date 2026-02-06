@@ -13,22 +13,27 @@ export async function POST(req: Request) {
       );
     }
 
-    // For now, we'll use a simple email service approach
-    // You can replace this with Resend, SendGrid, or any email service
-    
-    // Option 1: Using Resend (recommended)
-    if (process.env.RESEND_API_KEY) {
-      const response = await fetch('https://api.resend.com/emails', {
+    // Using Brevo (formerly Sendinblue) for email delivery
+    if (process.env.BREVO_API_KEY) {
+      const response = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+          'api-key': process.env.BREVO_API_KEY,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          from: 'noreply@realdiamonddigital.com',
-          to: process.env.CONTACT_EMAIL || 'akinsanmioluwatimilehin@gmail.com',
+          sender: {
+            name: 'RealDiamond Digital Website',
+            email: 'noreply@realdiamonddigital.com',
+          },
+          to: [
+            {
+              email: process.env.CONTACT_EMAIL || 'oluwatimilehinakinsanmi@gmail.com',
+              name: 'RealDiamond Digital Team',
+            },
+          ],
           subject: `New Contact Form Submission from ${name}`,
-          html: `
+          htmlContent: `
             <h2>New Contact Form Submission</h2>
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> ${email}</p>
@@ -43,6 +48,8 @@ export async function POST(req: Request) {
       });
 
       if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Brevo API error:', errorData);
         throw new Error('Failed to send email');
       }
     } else {

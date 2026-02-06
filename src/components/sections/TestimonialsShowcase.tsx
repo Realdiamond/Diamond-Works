@@ -109,21 +109,12 @@ const TestimonialsShowcase = ({ initialTestimonials }: { initialTestimonials: Te
 
                     {/* Author Info */}
                     <div className="flex items-center justify-between gap-4 pt-6 border-t border-border/50">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-full overflow-hidden ring-2 ring-accent/20">
-                          <img 
-                            src={testimonial.image} 
-                            alt={testimonial.author}
-                            className="w-full h-full object-cover"
-                          />
+                      <div>
+                        <div className="font-bold text-foreground">
+                          {testimonial.author}
                         </div>
-                        <div>
-                          <div className="font-bold text-foreground">
-                            {testimonial.author}
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            {testimonial.role}, {testimonial.company}
-                          </div>
+                        <div className="text-sm text-muted-foreground">
+                          {testimonial.role}, {testimonial.company}
                         </div>
                       </div>
 

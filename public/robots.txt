@@ -7,4 +7,4 @@ Disallow: /studio/
 Disallow: /api/
 
 # Sitemap
-Sitemap: https://realdiamondworks.com/sitemap.xml
+Sitemap: https://realdiamond-digital.vercel.app/sitemap.xml
