@@ -81,10 +81,34 @@ export const testimonial = defineType({
       hidden: ({ document }) => document?.type !== 'video',
     }),
     defineField({
-      name: 'videoUrl',
-      title: 'Video URL',
-      type: 'url',
+      name: 'videoSource',
+      title: 'Video Source',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'YouTube Link', value: 'youtube' },
+          { title: 'Upload Video File', value: 'upload' },
+        ],
+      },
+      initialValue: 'youtube',
       hidden: ({ document }) => document?.type !== 'video',
+    }),
+    defineField({
+      name: 'videoUrl',
+      title: 'YouTube Video URL',
+      type: 'url',
+      description: 'Paste the full YouTube video URL (e.g., https://www.youtube.com/watch?v=...)',
+      hidden: ({ document }) => document?.type !== 'video' || document?.videoSource !== 'youtube',
+    }),
+    defineField({
+      name: 'videoFile',
+      title: 'Video File',
+      type: 'file',
+      options: {
+        accept: 'video/*',
+      },
+      description: 'Upload video file (MP4 recommended)',
+      hidden: ({ document }) => document?.type !== 'video' || document?.videoSource !== 'upload',
     }),
     defineField({
       name: 'videoDuration',
@@ -104,6 +128,13 @@ export const testimonial = defineType({
       title: 'Featured Testimonial',
       type: 'boolean',
       description: 'Show this testimonial in featured sections',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'showOnHomepage',
+      title: 'Show on Homepage',
+      type: 'boolean',
+      description: 'Display this testimonial on the homepage carousel',
       initialValue: false,
     }),
     defineField({

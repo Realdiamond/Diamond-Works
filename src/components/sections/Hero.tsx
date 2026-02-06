@@ -95,7 +95,7 @@ const Hero = () => {
 
             {/* Subheadline */}
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed animate-slide-up max-w-xl" style={{ animationDelay: "0.1s" }}>
-              We build high-converting websites and local SEO strategies for HVAC, plumbing, roofing, and cleaning companies. Fill your schedule with qualified leads, not tire-kickers.
+              From web design to local SEO we help local service businesses like HVAC, plumbing, roofing, cleaning and similar companies turn clicks into booked calls
             </p>
 
             {/* CTAs */}

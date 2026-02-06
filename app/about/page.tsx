@@ -76,8 +76,8 @@ const About = () => {
                   a different kind of agency—one that combines strategic thinking with hands-on execution.
                 </p>
                 <p>
-                  Today, we work with small to medium-sized businesses, local service providers, and 
-                  growing startups who are ready to invest in their digital presence and see measurable returns.
+                  Today, we specialize in helping local service providers—HVAC companies, plumbers, roofers, 
+                  and cleaning services—who are ready to invest in their digital presence and see measurable returns.
                 </p>
               </div>
             </div>

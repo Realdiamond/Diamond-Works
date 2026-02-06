@@ -1,80 +1,88 @@
-import Layout from "@/components/layout/Layout";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { ArrowRight, Star, Quote, Play, Sparkles } from "lucide-react";
+import { Metadata } from 'next';
+import { Star, Quote, Sparkles } from 'lucide-react';
+import { client } from '@/sanity/lib/client';
+import { VideoTestimonialCarousel } from '@/components/VideoTestimonialCarousel';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
-const testimonials = [
-  {
-    quote: "RealDiamond Digital transformed our online presence completely. Our website now converts at 3x the rate of our old site, and we're ranking on the first page for our key terms.",
-    author: "Sarah Mitchell",
-    role: "CEO, TechStart Solutions",
-    rating: 5,
-    type: "text",
-  },
-  {
-    quote: "Working with the team felt like having an in-house digital department. They understood our business goals and delivered a website that truly represents our brand.",
-    author: "James Rodriguez",
-    role: "Founder, GreenLeaf Consulting",
-    rating: 5,
-    type: "text",
-  },
-  {
-    quote: "The strategic approach they brought to our SEO was game-changing. We've seen a 200% increase in organic traffic within six months.",
-    author: "Emily Chen",
-    role: "Marketing Director, Urban Developments",
-    rating: 5,
-    type: "text",
-  },
-  {
-    quote: "From the first meeting, they understood exactly what we needed. The results speak for themselves - our bookings have increased by 250%.",
-    author: "Michael Torres",
-    role: "Owner, FitLife Studios",
-    rating: 5,
-    type: "text",
-  },
-  {
-    quote: "Professional, responsive, and truly invested in our success. RealDiamond Digital delivered a website that has become our most powerful marketing tool.",
-    author: "Amanda Foster",
-    role: "Partner, Legal Partners LLP",
-    rating: 5,
-    type: "text",
-  },
-  {
-    quote: "The ROI on our website redesign was phenomenal. We saw a complete transformation in how customers perceive our brand online.",
-    author: "David Kim",
-    role: "CEO, Artisan Bakery Co.",
-    rating: 5,
-    type: "text",
-  },
-];
+export const metadata: Metadata = {
+  title: 'Client Testimonials | RealDiamond Digital',
+  description: 'Hear from our satisfied clients. Real results, real testimonials from businesses we\'ve helped grow.',
+};
 
-const videoTestimonials = [
-  {
-    title: "How RealDiamond Digital Helped Us 3x Our Conversions",
-    author: "Sarah Mitchell",
-    role: "CEO, TechStart Solutions",
-    thumbnail: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=400&fit=crop",
-    duration: "2:45",
-  },
-  {
-    title: "Our SEO Success Story with RealDiamond Digital",
-    author: "Emily Chen",
-    role: "Marketing Director, Urban Developments",
-    thumbnail: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=400&fit=crop",
-    duration: "3:12",
-  },
-  {
-    title: "From Startup to Industry Leader: Our Digital Journey",
-    author: "James Rodriguez",
-    role: "Founder, GreenLeaf Consulting",
-    thumbnail: "https://images.unsplash.com/photo-1556157382-97eda2d62296?w=600&h=400&fit=crop",
-    duration: "4:08",
-  },
-];
+// Define types
+interface TestimonialData {
+  _id: string;
+  type: 'text' | 'video';
+  name: string;
+  company?: string;
+  position?: string;
+  content?: string;
+  rating?: number;
+  image?: {
+    asset: {
+      url: string;
+    };
+  };
+  videoSource?: 'youtube' | 'upload';
+  videoUrl?: string;
+  videoFile?: {
+    asset: {
+      url: string;
+    };
+  };
+  videoThumbnail?: {
+    asset: {
+      url: string;
+    };
+  };
+  videoDuration?: string;
+  videoTitle?: string;
+  order?: number;
+}
 
-const TestimonialsPage = () => {
+// Fetch testimonials from Sanity
+async function getTestimonials() {
+  const textTestimonials = await client.fetch<TestimonialData[]>(
+    `*[_type == "testimonial" && type == "text"] | order(order asc) {
+      _id,
+      type,
+      name,
+      company,
+      position,
+      content,
+      rating,
+      "image": image.asset->{url},
+      order
+    }`
+  );
+
+  const videoTestimonials = await client.fetch<TestimonialData[]>(
+    `*[_type == "testimonial" && type == "video"] | order(order asc) {
+      _id,
+      type,
+      name,
+      company,
+      position,
+      videoSource,
+      videoUrl,
+      "videoFile": videoFile.asset->{url},
+      "videoThumbnail": videoThumbnail.asset->{url},
+      videoDuration,
+      videoTitle,
+      order
+    }`
+  );
+
+  return { textTestimonials, videoTestimonials };
+}
+
+export default async function TestimonialsPage() {
+  const { textTestimonials, videoTestimonials } = await getTestimonials();
+
   return (
-    <Layout>
+    <>
       {/* Hero Section */}
       <section className="pt-24 pb-16 bg-background relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
@@ -99,116 +107,95 @@ const TestimonialsPage = () => {
         </div>
       </section>
 
-      {/* Video Testimonials */}
-      <section className="py-20 bg-secondary/30 border-y border-border/50">
-        <div className="container-wide">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Video <span className="text-gradient">Testimonials</span>
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Watch our clients share their experiences working with RealDiamond Digital
-            </p>
-          </div>
+      {/* Video Testimonials Section */}
+      {videoTestimonials && videoTestimonials.length > 0 && (
+        <section className="py-20 bg-secondary/30 border-y border-border/50">
+          <div className="container-wide">
+            <div className="text-center mb-12">
+              <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Video <span className="text-gradient">Testimonials</span>
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                Watch our clients share their experiences working with RealDiamond Digital
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {videoTestimonials.map((video, index) => (
-              <div
-                key={video.title}
-                className="glass-card-hover overflow-hidden group cursor-pointer"
-              >
-                <div className="relative">
-                  <img
-                    src={video.thumbnail}
-                    alt={video.author}
-                    className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-background/60 flex items-center justify-center group-hover:bg-background/40 transition-colors">
-                    <div className="w-16 h-16 bg-gradient-to-br from-accent to-accent-secondary rounded-full flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform">
-                      <Play className="w-6 h-6 text-accent-foreground ml-1" />
+            <VideoTestimonialCarousel testimonials={videoTestimonials} />
+          </div>
+        </section>
+      )}
+
+      {/* Text Testimonials Grid */}
+      {textTestimonials && textTestimonials.length > 0 && (
+        <section className="py-20">
+          <div className="container-wide">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {textTestimonials.map((testimonial) => (
+                <div
+                  key={testimonial._id}
+                  className="glass-card-hover p-8 relative"
+                >
+                  {/* Quote Icon */}
+                  <Quote className="w-10 h-10 text-accent/20 absolute top-6 right-6" />
+
+                  {/* Rating */}
+                  {testimonial.rating && (
+                    <div className="flex gap-1 mb-4">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className="w-4 h-4 fill-accent text-accent"
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Content */}
+                  <p className="text-muted-foreground mb-6 relative z-10 leading-relaxed">
+                    "{testimonial.content}"
+                  </p>
+
+                  {/* Author Info */}
+                  <div className="flex items-center gap-4 pt-6 border-t border-border/50">
+                    {testimonial.image?.asset?.url && (
+                      <img
+                        src={testimonial.image.asset.url}
+                        alt={testimonial.name}
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                    )}
+                    <div>
+                      <p className="font-semibold text-foreground">
+                        {testimonial.name}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {testimonial.position}
+                        {testimonial.position && testimonial.company && ', '}
+                        {testimonial.company}
+                      </p>
                     </div>
                   </div>
-                  <div className="absolute bottom-4 right-4 px-2 py-1 glass-card text-xs font-medium text-foreground">
-                    {video.duration}
-                  </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="font-heading text-lg font-semibold text-foreground mb-2 group-hover:text-accent transition-colors">
-                    {video.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {video.author} • {video.role}
-                  </p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Written Testimonials */}
-      <section className="py-20 bg-background">
-        <div className="container-wide">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Client <span className="text-gradient">Reviews</span>
-            </h2>
+      {/* Empty State */}
+      {(!textTestimonials || textTestimonials.length === 0) && 
+       (!videoTestimonials || videoTestimonials.length === 0) && (
+        <section className="py-20">
+          <div className="container-wide text-center">
+            <p className="text-muted-foreground text-lg">
+              No testimonials available yet. Check back soon!
+            </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={testimonial.author}
-                className="glass-card-hover p-8 relative"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <Quote className="w-10 h-10 text-accent/20 absolute top-6 right-6" />
-                
-                {/* Rating */}
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-accent text-accent" />
-                  ))}
-                </div>
-                
-                <p className="text-foreground mb-6 leading-relaxed relative z-10">
-                  "{testimonial.quote}"
-                </p>
-                <div className="border-t border-border/50 pt-6">
-                  <p className="font-semibold text-foreground">{testimonial.author}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-20 bg-secondary/30 border-y border-border/50">
-        <div className="container-wide">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { value: "100%", label: "Client Satisfaction" },
-              { value: "50+", label: "Happy Clients" },
-              { value: "5.0", label: "Average Rating" },
-              { value: "95%", label: "Client Retention" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center glass-card p-8">
-                <div className="font-heading text-4xl md:text-5xl font-bold text-gradient mb-2">
-                  {stat.value}
-                </div>
-                <div className="text-muted-foreground text-sm">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-secondary/30 border-t border-border/50">
         <div className="container-wide">
           <div className="glass-card p-12 md:p-16 text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-accent-secondary/5" />
@@ -216,21 +203,20 @@ const TestimonialsPage = () => {
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Ready to Join Our <span className="text-gradient">Success Stories?</span>
               </h2>
-              <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
-                Let's discuss how we can help you achieve similar results for your business.
+              <p className="text-muted-foreground max-w-2xl mx-auto mb-8 text-lg">
+                Let's discuss how we can help your business achieve the same remarkable 
+                results our clients are experiencing.
               </p>
-              <Button variant="hero" size="xl" asChild>
+              <Button asChild size="lg" className="gap-2">
                 <Link href="/contact">
-                  Start Your Project
-                  <ArrowRight className="w-5 h-5" />
+                  Get Started Today
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
             </div>
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
-};
-
-export default TestimonialsPage;
+}
