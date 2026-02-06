@@ -29,6 +29,22 @@ const iconMap: any = {
   "zap": Zap,
   "shopping-cart": ShoppingCart,
   "trending-up": TrendingUp,
+};
+
+// Fallback gradients for services
+const gradientMap: any = {
+  "Web Design & Development": "from-blue-500 to-cyan-500",
+  "Search Engine Optimization": "from-green-500 to-emerald-500",
+  "Brand & Visual Design": "from-purple-500 to-pink-500",
+  "E-commerce Solutions": "from-orange-500 to-red-500",
+};
+
+const getServiceGradient = (title: string, gradient: string) => {
+  // If gradient is empty, white, or not set, use fallback
+  if (!gradient || gradient.includes('white') || gradient.trim() === '') {
+    return gradientMap[title] || 'from-accent to-accent-secondary';
+  }
+  return gradient;
 }; 
 
 export default async function ServicesGrid() {
@@ -52,6 +68,7 @@ export default async function ServicesGrid() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {services.map((service: any, index: number) => {
             const IconComponent = iconMap[service.icon] || Globe;
+            const serviceGradient = getServiceGradient(service.title, service.gradient);
             
             return (
               <div
@@ -60,11 +77,11 @@ export default async function ServicesGrid() {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Gradient Background on Hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                <div className={`absolute inset-0 bg-gradient-to-br ${serviceGradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
                 
                 <div className="relative z-10">
                   {/* Icon */}
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg ${service.gradient ? `bg-gradient-to-br ${service.gradient}` : 'bg-gradient-to-br from-accent to-accent-secondary'}`}>
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg bg-gradient-to-br ${serviceGradient}`}>
                     <IconComponent className="w-8 h-8 text-white" />
                   </div>
 
@@ -104,7 +121,7 @@ export default async function ServicesGrid() {
 
                 {/* Corner Decoration */}
                 <div className="absolute top-0 right-0 w-32 h-32 opacity-0 group-hover:opacity-10 transition-opacity duration-500">
-                  <div className={`w-full h-full bg-gradient-to-br ${service.gradient} rounded-full blur-3xl`} />
+                  <div className={`w-full h-full bg-gradient-to-br ${serviceGradient} rounded-full blur-3xl`} />
                 </div>
               </div>
             );
