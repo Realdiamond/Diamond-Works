@@ -66,11 +66,11 @@ const Hero = () => {
 
             {/* Headline */}
             <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight animate-slide-up">
-              Get More Calls
+              More Leads.
               <br />
-              for Your{" "}
+              More Bookings.{" "}
               <span className="relative inline-block">
-                <span className="text-gradient">Service Business</span>
+                <span className="text-gradient">Less Hassle.</span>
                 <svg 
                   className="absolute -bottom-2 left-0 w-full h-3" 
                   viewBox="0 0 300 12" 
