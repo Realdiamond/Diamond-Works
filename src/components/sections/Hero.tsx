@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Globe, Search, Palette, Zap } from "lucide-react";
+import { ArrowRight, Globe, Search, Palette, Zap, TrendingUp, CheckCircle } from "lucide-react";
 
 const services = [
   { icon: Globe, label: "Web Design", color: "from-blue-500 to-cyan-500" },
@@ -13,21 +13,83 @@ const services = [
 
 const Hero = () => {
   return (
-    <section className="relative h-[85vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-secondary/20">
-      {/* Subtle Background Elements */}
+    <section className="relative h-[85vh] flex items-center justify-center overflow-hidden bg-background">
+      {/* Subtle Background Elements - Less Gradient */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute w-[600px] h-[600px] rounded-full blur-[120px] opacity-10 bg-accent top-1/4 left-1/4 animate-pulse" />
-        <div className="absolute w-[400px] h-[400px] rounded-full blur-[100px] opacity-10 bg-accent-secondary bottom-1/4 right-1/4 animate-pulse" style={{ animationDelay: "2s" }} />
+        <div className="absolute w-[500px] h-[500px] rounded-full blur-[140px] opacity-5 bg-accent top-1/3 left-1/3 animate-pulse" />
+        <div className="absolute w-[300px] h-[300px] rounded-full blur-[120px] opacity-5 bg-accent-secondary bottom-1/3 right-1/3 animate-pulse" style={{ animationDelay: "2s" }} />
       </div>
 
       {/* Mesh Pattern */}
       <div 
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0 opacity-[0.015]"
         style={{
           backgroundImage: `radial-gradient(circle at 2px 2px, hsl(var(--accent)) 1px, transparent 0)`,
           backgroundSize: '64px 64px',
         }}
       />
+
+      {/* Floating Cards - Left Side */}
+      <div className="absolute left-8 top-1/2 -translate-y-1/2 hidden xl:block animate-fade-in" style={{ animationDelay: "0.5s" }}>
+        <div className="space-y-6">
+          {/* Success Card */}
+          <div className="w-64 glass-card p-5 animate-float">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <div className="font-semibold text-foreground text-sm">Project Success</div>
+                <div className="text-xs text-muted-foreground">HVAC Pro Inc.</div>
+              </div>
+            </div>
+            <div className="text-sm text-muted-foreground">
+              250% increase in booked calls
+            </div>
+          </div>
+
+          {/* Growth Card */}
+          <div className="w-56 glass-card p-4 animate-float" style={{ animationDelay: "-3s" }}>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-muted-foreground">Lead Growth</span>
+              <span className="text-xs text-accent font-semibold">+320%</span>
+            </div>
+            <div className="h-2 bg-secondary rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-accent to-accent-secondary w-4/5 rounded-full animate-pulse" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Cards - Right Side */}
+      <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden xl:block animate-fade-in" style={{ animationDelay: "0.6s" }}>
+        <div className="space-y-6">
+          {/* Stats Card */}
+          <div className="w-60 glass-card p-5 animate-float" style={{ animationDelay: "-1s" }}>
+            <div className="flex items-center gap-3">
+              <div className="flex -space-x-2">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="w-9 h-9 rounded-full bg-gradient-to-br from-accent to-accent-secondary border-2 border-background" />
+                ))}
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-foreground">98%</div>
+                <div className="text-xs text-muted-foreground">Client Retention</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Traffic Card */}
+          <div className="w-56 glass-card p-4 animate-float" style={{ animationDelay: "-4s" }}>
+            <div className="flex items-center gap-2 mb-2">
+              <TrendingUp className="w-4 h-4 text-accent" />
+              <span className="text-sm font-medium text-foreground">Traffic Boost</span>
+            </div>
+            <div className="text-2xl font-bold text-foreground">3.5x</div>
+            <div className="text-xs text-muted-foreground">Average increase</div>
+          </div>
+        </div>
+      </div>
 
       <div className="container-wide relative z-10 text-center px-4">
         {/* Main Content */}
@@ -44,8 +106,8 @@ const Hero = () => {
             We build high-converting websites and run local SEO for service businesses that want real results.
           </p>
 
-          {/* Single Strong CTA */}
-          <div className="animate-slide-up" style={{ animationDelay: "0.2s" }}>
+          {/* Two CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style={{ animationDelay: "0.2s" }}>
             <Button 
               size="xl" 
               asChild 
@@ -53,6 +115,17 @@ const Hero = () => {
             >
               <Link href="/contact#consultation">
                 Get Your Free Strategy Call
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
+            <Button 
+              variant="outline" 
+              size="xl" 
+              asChild 
+              className="group border-2 font-semibold text-lg px-10 py-7 h-auto"
+            >
+              <Link href="/projects">
+                View All Projects
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
