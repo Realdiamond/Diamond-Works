@@ -20,7 +20,7 @@ const TrustedBySection = () => {
       <div className="container-wide mb-8">
         <div className="text-center">
           <p className="text-base font-semibold text-gradient">
-            Trusted by innovative companies
+            Trusted by growing service businesses
           </p>
         </div>
       </div>

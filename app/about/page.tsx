@@ -44,12 +44,12 @@ const About = () => {
               <span className="text-sm font-medium text-muted-foreground">About RealDiamond Digital</span>
             </div>
             <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6">
-              A Strategic Partner for Your{" "}
-              <span className="text-gradient">Digital Success</span>
+              Your Partner for{" "}
+              <span className="text-gradient">More Calls & Revenue</span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              We're a CEO-led digital agency focused on building high-performing digital experiences 
-              that help businesses grow sustainably.
+              We're a CEO-led digital agency focused on building high-converting websites and local SEO strategies 
+              that help service businesses grow. We work closely with HVAC companies, plumbers, roofers, and cleaning services to deliver real leads and measurable revenue.
             </p>
           </div>
         </div>

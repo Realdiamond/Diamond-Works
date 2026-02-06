@@ -42,7 +42,7 @@ const BentoPortfolio = ({ projects }: BentoPortfolioProps) => {
             <span className="text-gradient">Delivered</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Explore our portfolio of custom websites, branding projects, and digital campaigns that helped businesses scale.
+            Real results for real businesses. See how we've helped service companies get more calls, bookings, and revenue.
           </p>
         </div>
 
@@ -159,10 +159,10 @@ const BentoPortfolio = ({ projects }: BentoPortfolioProps) => {
           <div className="md:col-span-6 lg:col-span-12 rounded-3xl overflow-hidden glass-card p-12 bg-gradient-to-br from-accent/5 via-accent-secondary/5 to-transparent border-2 border-accent/20 hover:border-accent/40 transition-all duration-500 group cursor-pointer">
             <div className="max-w-2xl">
               <h3 className="font-heading text-3xl md:text-4xl font-bold mb-4">
-                Want to see more? We've got 50+ projects to show you.
+                Want to see more? We've helped 50+ service businesses grow.
               </h3>
               <p className="text-muted-foreground text-lg mb-6">
-                From startups to enterprises, explore our full portfolio of successful projects and their impact stories.
+                From HVAC companies to roofing contractors, see how we've driven real leads and revenue for businesses like yours.
               </p>
               <Link 
                 href="/projects"

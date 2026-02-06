@@ -66,11 +66,11 @@ const Hero = () => {
 
             {/* Headline */}
             <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight animate-slide-up">
-              Your Complete
+              Get More Calls
               <br />
-              Digital Growth{" "}
+              for Your{" "}
               <span className="relative inline-block">
-                <span className="text-gradient">Partner</span>
+                <span className="text-gradient">Service Business</span>
                 <svg 
                   className="absolute -bottom-2 left-0 w-full h-3" 
                   viewBox="0 0 300 12" 
@@ -95,7 +95,7 @@ const Hero = () => {
 
             {/* Subheadline */}
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed animate-slide-up max-w-xl" style={{ animationDelay: "0.1s" }}>
-              From stunning web design to powerful SEO strategies, we craft digital solutions that turn clicks into customers and traffic into revenue.
+              We build high-converting websites and local SEO strategies for HVAC, plumbing, roofing, and cleaning companies. Fill your schedule with qualified leads, not tire-kickers.
             </p>
 
             {/* CTAs */}
@@ -126,9 +126,9 @@ const Hero = () => {
             {/* Quick Stats */}
             <div className="flex flex-wrap gap-8 pt-8 animate-fade-in" style={{ animationDelay: "0.3s" }}>
               {[
-                { value: "50+", label: "Projects" },
-                { value: "95%", label: "Satisfaction" },
-                { value: "3x", label: "Avg. ROI" },
+                { value: "50+", label: "Service Businesses" },
+                { value: "3x", label: "More Calls" },
+                { value: "156%", label: "Lead Increase" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <div className="text-2xl font-bold text-foreground">{stat.value}</div>

@@ -41,10 +41,10 @@ export default async function ServicesGrid() {
         <div className="max-w-2xl mx-auto text-center mb-20">
           <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             Everything You Need to{" "}
-            <span className="text-gradient">Win Online</span>
+            <span className="text-gradient">Dominate Your Local Market</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Full-stack digital services designed to grow your business. One team, infinite possibilities.
+            Websites, SEO, and lead systems built specifically for service businesses. Get more calls, fill your schedule, and grow your revenue.
           </p>
         </div>
 

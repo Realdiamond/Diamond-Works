@@ -33,14 +33,14 @@ const FinalCTA = () => {
 
           {/* Headline */}
           <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-8 leading-[1.1]">
-            Ready to Transform Your
+            Ready to Get More
             <br />
-            <span className="text-gradient">Digital Presence?</span>
+            <span className="text-gradient">Qualified Leads?</span>
           </h2>
 
           {/* Subtext */}
           <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-            Let's talk about your project and how we can help you win online.
+            Let's talk about your business and build a website that fills your schedule with ready-to-buy customers.
           </p>
 
           {/* CTAs */}
