@@ -6,7 +6,12 @@ import { ArrowRight, Sparkles } from "lucide-react";
 
 const FinalCTA = () => {
   return (
-    <section className="py-32 relative overflow-hidden bg-secondary/10">
+    <section className="py-32 relative overflow-hidden bg-gradient-to-br from-background via-accent/[0.02] to-accent-secondary/[0.02]">
+      {/* Subtle Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-accent/5 to-accent-secondary/5 blur-[140px] opacity-50" />
+      </div>
+
       {/* Dot Grid Pattern */}
       <div 
         className="absolute inset-0 opacity-[0.03]"
