@@ -33,8 +33,9 @@ export async function generateStaticParams() {
   return posts.map((post: any) => ({ slug: post.slug }));
 }
 
-// Revalidate every 60 seconds - content updates within 1 minute
-export const revalidate = 60;
+// Use webhook for instant updates - no time-based revalidation
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

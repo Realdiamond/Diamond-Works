@@ -17,4 +17,3 @@ export function urlFor(source: any) {
   return builder.image(source)
 }
 
-export const revalidate = 3600

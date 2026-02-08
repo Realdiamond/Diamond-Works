@@ -32,8 +32,11 @@ async function getCategories() {
   `);
   return categories;
 }
-// Revalidate every 60 seconds - content updates within 1 minute
-export const revalidate = 60;
+
+// Use webhook for instant updates - no time-based revalidation
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 export default async function Blog() {
   const blogPosts = await getBlogPosts();
   const categories = await getCategories();

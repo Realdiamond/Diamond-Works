@@ -9,6 +9,10 @@ import TestimonialsShowcaseWrapper from "@/components/sections/TestimonialsShowc
 import BlogSection from "@/components/sections/BlogSection";
 import FinalCTA from "@/components/sections/FinalCTA";
 
+// Use webhook for instant updates - no time-based revalidation
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
   return (
     <Layout>
