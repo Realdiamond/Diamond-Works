@@ -22,9 +22,8 @@ async function getProjects() {
   return projects;
 }
 
-// Use webhook for instant updates - no time-based revalidation
-export const revalidate = 0;
-export const dynamic = 'force-dynamic';
+// Static with on-demand revalidation via webhook
+export const revalidate = false;
 
 const serviceCategories = [
   { id: "all", name: "All Projects" },

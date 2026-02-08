@@ -49,9 +49,8 @@ async function getAdjacentProjects(currentSlug: string) {
   return { nextProject, prevProject };
 }
 
-// Use webhook for instant updates - no time-based revalidation
-export const revalidate = 0;
-export const dynamic = 'force-dynamic';
+// Static with on-demand revalidation via webhook
+export const revalidate = false;
 
 export async function generateStaticParams() {
   const projects = await client.fetch(`*[_type == "project"] { "slug": slug.current }`);

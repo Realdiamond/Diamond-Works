@@ -33,9 +33,8 @@ async function getCategories() {
   return categories;
 }
 
-// Use webhook for instant updates - no time-based revalidation
-export const revalidate = 0;
-export const dynamic = 'force-dynamic';
+// Static with on-demand revalidation via webhook
+export const revalidate = false;
 
 export default async function Blog() {
   const blogPosts = await getBlogPosts();
