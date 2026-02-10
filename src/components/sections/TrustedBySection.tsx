@@ -22,8 +22,17 @@ const TrustedBySection = async () => {
   const tripleClients = [...clients, ...clients, ...clients];
 
   return (
-    <section className="py-16 bg-gradient-to-b from-secondary/20 to-background border-y border-border/50 overflow-hidden">
-      <div className="container-wide mb-8">
+    <section className="relative py-16 bg-secondary/10 border-y border-border/50 overflow-hidden">
+      {/* Mesh Pattern */}
+      <div 
+        className="absolute inset-0 opacity-[0.015]"
+        style={{
+          backgroundImage: `radial-gradient(circle at 2px 2px, hsl(var(--accent)) 1px, transparent 0)`,
+          backgroundSize: '64px 64px',
+        }}
+      />
+      
+      <div className="container-wide mb-8 relative z-10">
         <div className="text-center">
           <p className="text-base font-semibold text-gradient">
             Trusted by growing service businesses
@@ -32,7 +41,7 @@ const TrustedBySection = async () => {
       </div>
 
       {/* Scrolling Logo Carousel */}
-      <div className="relative">
+      <div className="relative z-10">
         {/* Gradient masks for smooth fade effect */}
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background via-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background via-background to-transparent z-10 pointer-events-none" />
@@ -44,17 +53,17 @@ const TrustedBySection = async () => {
               className="flex-shrink-0 mx-12 group cursor-default"
             >
               {client.logo ? (
-                <div className="w-20 h-20 rounded-2xl bg-white/5 backdrop-blur-sm flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                <div className="w-32 h-20 rounded-2xl bg-white/5 backdrop-blur-sm flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 overflow-hidden">
                   <Image
-                    src={urlForImage(client.logo).width(80).height(80).url()}
+                    src={urlForImage(client.logo).width(128).height(80).url()}
                     alt={client.logo.alt || client.name}
-                    width={80}
+                    width={128}
                     height={80}
                     className="object-contain p-2"
                   />
                 </div>
               ) : (
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent to-accent-secondary flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <div className="w-32 h-20 rounded-2xl bg-gradient-to-br from-accent to-accent-secondary flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                   <span className="font-heading font-bold text-xl text-white">{client.initials}</span>
                 </div>
               )}
