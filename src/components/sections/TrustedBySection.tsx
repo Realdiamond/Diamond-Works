@@ -1,6 +1,5 @@
 import { client } from "@/sanity/lib/client";
 import { urlForImage } from "@/sanity/lib/image";
-import Image from "next/image";
 
 async function getCompanyLogos() {
   const logos = await client.fetch(`
@@ -44,16 +43,17 @@ const TrustedBySection = async () => {
               className="flex-shrink-0 px-8 sm:px-12"
             >
               {client.logo ? (
-                <div className="h-16 sm:h-20 w-32 sm:w-40 flex items-center justify-center group transition-all duration-300">
-                  <Image
-                    src={urlForImage(client.logo).width(160).height(80).url()}
-                    alt={client.logo.alt || client.name}
-                    width={160}
-                    height={80}
-                    className="object-contain h-full w-auto max-w-full grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                    unoptimized
-                  />
-                </div>
+                <div
+                  className="h-16 sm:h-20 w-40 sm:w-48 flex-shrink-0 
+                             bg-center bg-no-repeat bg-contain
+                             grayscale opacity-60 
+                             hover:grayscale-0 hover:opacity-100 
+                             transition-all duration-300"
+                  style={{
+                    backgroundImage: `url(${urlForImage(client.logo).width(400).url()})`,
+                  }}
+                  aria-label={client.name}
+                />
               ) : (
                 <div className="h-16 sm:h-20 w-32 sm:w-40 flex items-center justify-center">
                   <div className="px-4 py-2 rounded-lg bg-secondary/30 backdrop-blur-sm border border-border/50 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300">

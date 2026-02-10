@@ -63,6 +63,15 @@ export default {
         sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
         heading: ['Syne', 'Space Grotesk', 'system-ui', 'sans-serif'],
       },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 30s linear infinite',
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
