@@ -22,7 +22,7 @@ const TrustedBySection = async () => {
   const tripleClients = [...clients, ...clients, ...clients];
 
   return (
-    <section className="relative py-12 sm:py-16 bg-secondary/10 overflow-hidden">
+    <section className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 bg-secondary/10 overflow-hidden">
       {/* Mesh Pattern */}
       <div 
         className="absolute inset-0 opacity-[0.015]"
@@ -59,7 +59,7 @@ const TrustedBySection = async () => {
                     alt={client.logo.alt || client.name}
                     width={128}
                     height={80}
-                    className="object-cover"
+                    className="object-contain w-full h-full"
                   />
                 </div>
               ) : (
