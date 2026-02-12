@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { client } from "@/sanity/lib/client";
+import { calculateReadTime } from '@/lib/readtime';
 
 async function getRecentPosts() {
   const posts = await client.fetch(`
@@ -10,8 +11,8 @@ async function getRecentPosts() {
       title,
       "slug": slug.current,
       excerpt,
+      content,
       "category": category->title,
-      readTime,
       publishedDate,
       "image": image.asset->url
     }
@@ -76,7 +77,7 @@ export default async function BlogSection() {
                   </span>
                   <span className="flex items-center gap-1">
                     <Clock className="w-3 h-3" />
-                    {post.readTime}
+                    {calculateReadTime(post.content)}
                   </span>
                 </div>
 

@@ -125,13 +125,6 @@ export const blogPost = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'readTime',
-      title: 'Read Time',
-      type: 'string',
-      placeholder: 'e.g., 5 min read',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'image',
       title: 'Featured Image',
       type: 'image',

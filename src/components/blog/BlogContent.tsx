@@ -3,16 +3,17 @@
 import { useState } from "react";
 import Link from "next/link";
 import { User, Clock } from "lucide-react";
+import { calculateReadTime } from '@/lib/readtime';
 
 interface BlogPost {
   _id: string;
   title: string;
   slug: string;
   excerpt: string;
+  content: any[];
   category: string;
   author: string;
   publishedDate: string;
-  readTime: string;
   image?: string;
 }
 
@@ -124,7 +125,7 @@ export default function BlogContent({ posts, categories }: BlogContentProps) {
                         </span>
                         <span className="flex items-center gap-1">
                           <Clock className="w-3 h-3" />
-                          {post.readTime}
+                          {calculateReadTime(post.content)}
                         </span>
                       </div>
                       <span>{new Date(post.publishedDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>

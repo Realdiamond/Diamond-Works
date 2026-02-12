@@ -12,10 +12,10 @@ async function getBlogPosts() {
       title,
       "slug": slug.current,
       excerpt,
+      content,
       "category": category->title,
       author,
       publishedDate,
-      readTime,
       "image": image.asset->url,
       featured
     }

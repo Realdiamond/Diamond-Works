@@ -7,6 +7,8 @@ import { ArrowLeft, ArrowRight, Clock, User, Calendar, Share2, Sparkles } from "
 import { client } from "@/sanity/lib/client";
 import { PortableText } from "@portabletext/react";
 
+import { calculateReadTime } from '@/lib/readtime';
+
 async function getBlogPost(slug: string) {
   const post = await client.fetch(
     `*[_type == "blog" && slug.current == $slug][0] {
@@ -18,7 +20,6 @@ async function getBlogPost(slug: string) {
       "category": category->title,
       author,
       publishedDate,
-      readTime,
       "image": image.asset->url,
       metaDescription,
       metaKeywords
@@ -43,6 +44,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
   if (!post) {
     notFound();
   }
+
+  const readTime = calculateReadTime(post.content);
 
   const portableTextComponents = {
     types: {
@@ -108,7 +111,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               </span>
               <span className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-accent" />
-                {post.readTime}
+                {readTime}
               </span>
             </div>
           </div>
