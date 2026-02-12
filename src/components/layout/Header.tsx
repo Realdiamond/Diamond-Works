@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
+// import Link from "next/link"; // Removed for full reload navigation
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Diamond } from "lucide-react";
@@ -42,19 +42,19 @@ const Header = () => {
       <div className="container-wide">
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <a href="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 bg-gradient-to-br from-accent to-accent-secondary rounded-xl flex items-center justify-center shadow-glow group-hover:shadow-[0_0_30px_-5px_hsl(174_84%_50%/0.6)] transition-all duration-300">
               <Diamond className="w-5 h-5 text-accent-foreground" />
             </div>
             <span className="font-heading font-bold text-xl text-foreground">
               <span className="text-gradient">RealDiamond</span> Digital
             </span>
-          </Link>
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.href}
                 href={link.href}
                 className={`text-sm font-medium transition-all duration-300 relative ${
@@ -67,14 +67,14 @@ const Header = () => {
                 {isActive(link.href) && (
                   <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-accent to-accent-secondary rounded-full" />
                 )}
-              </Link>
+              </a>
             ))}
           </div>
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Button variant="accent" asChild>
-              <Link href="/contact">Start Project</Link>
+            <Button variant="accent">
+              <a href="/contact">Start Project</a>
             </Button>
           </div>
 
@@ -97,7 +97,7 @@ const Header = () => {
           <div className="lg:hidden py-6 border-t border-border/50 animate-fade-in bg-background/95 backdrop-blur-md">
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
-                <Link
+                <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
@@ -108,12 +108,12 @@ const Header = () => {
                   }`}
                 >
                   {link.label}
-                </Link>
+                </a>
               ))}
-              <Button variant="accent" className="mt-4" asChild>
-                <Link href="/contact" onClick={() => setIsMenuOpen(false)}>
+              <Button variant="accent" className="mt-4">
+                <a href="/contact" onClick={() => setIsMenuOpen(false)}>
                   Start Project
-                </Link>
+                </a>
               </Button>
             </div>
           </div>
