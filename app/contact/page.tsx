@@ -9,18 +9,18 @@ import {
   Phone, 
   MapPin, 
   Clock,
+  CheckCircle, 
+  ArrowRight,
+  Calendar,
+  Sparkles
+} from "lucide-react";
 
 export const metadata = generateSEO({
   title: 'Contact Us',
   description: 'Get in touch with RealDiamond Digital. Schedule a free consultation to discuss your web design, SEO, or digital marketing project. Available worldwide.',
   keywords: ['contact', 'free consultation', 'get quote', 'digital marketing consultation', 'web design inquiry'],
   canonical: 'https://realdiamond-digital.vercel.app/contact',
-}); 
-  CheckCircle, 
-  ArrowRight,
-  Calendar,
-  Sparkles
-} from "lucide-react";
+});
 
 const Contact = () => {
   return (

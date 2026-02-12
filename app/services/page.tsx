@@ -9,13 +9,6 @@ import {
   Search, 
   Palette, 
   TrendingUp,
-
-export const metadata = generateSEO({
-  title: 'Our Services',
-  description: 'Expert web design, development, SEO, and digital marketing services. We create custom solutions that drive growth and deliver measurable ROI for your business.',
-  keywords: ['web design services', 'SEO services', 'digital marketing', 'web development', 'ecommerce solutions', 'custom websites'],
-  canonical: 'https://realdiamond-digital.vercel.app/services',
-});
   CheckCircle,
   Code,
   FileCode,
@@ -25,6 +18,13 @@ export const metadata = generateSEO({
   Zap,
   Sparkles
 } from "lucide-react";
+
+export const metadata = generateSEO({
+  title: 'Our Services',
+  description: 'Expert web design, development, SEO, and digital marketing services. We create custom solutions that drive growth and deliver measurable ROI for your business.',
+  keywords: ['web design services', 'SEO services', 'digital marketing', 'web development', 'ecommerce solutions', 'custom websites'],
+  canonical: 'https://realdiamond-digital.vercel.app/services',
+});
 
 const services = [
   {
