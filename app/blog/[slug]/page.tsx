@@ -173,7 +173,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
               <div className="mt-12 pt-8 border-t border-border/50">
                 <ShareButtons 
                   title={post.title}
-                  url={`/blog/${params.slug}`}
+                  url={`/blog/${slug}`}
                   description={post.excerpt || post.metaDescription || ''}
                 />
               </div>
