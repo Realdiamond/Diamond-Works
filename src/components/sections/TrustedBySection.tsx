@@ -24,7 +24,7 @@ const TrustedBySection = async () => {
     <section className="relative pt-12 pb-12 sm:pt-16 sm:pb-16 bg-gradient-to-b from-background to-secondary/5 overflow-hidden">
       {/* Subtle heading */}
       <div className="container-wide mb-12 text-center">
-        <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+        <p className="text-base font-medium text-muted-foreground uppercase tracking-wider">
           Trusted by leading brands
         </p>
       </div>
