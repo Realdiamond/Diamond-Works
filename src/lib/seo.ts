@@ -31,12 +31,15 @@ export function generateSEO({
   title,
   description = siteConfig.description,
   keywords = [],
-  ogImage = siteConfig.ogImage,
+  ogImage,
   ogType = 'website',
   article,
   canonical,
   noindex = false,
 }: SEOProps = {}): Metadata {
+  // Ensure ogImage has a fallback value
+  const finalOgImage = ogImage || siteConfig.ogImage;
+  
   const fullTitle = title 
     ? `${title} | ${siteConfig.name}`
     : `${siteConfig.name} | Strategic Web Design & Development That Grows Revenue`;
@@ -71,7 +74,7 @@ export function generateSEO({
       description,
       images: [
         {
-          url: ogImage.startsWith('http') ? ogImage : `${siteConfig.url}${ogImage}`,
+          url: finalOgImage.startsWith('http') ? finalOgImage : `${siteConfig.url}${finalOgImage}`,
           width: 1200,
           height: 630,
           alt: title || siteConfig.name,
