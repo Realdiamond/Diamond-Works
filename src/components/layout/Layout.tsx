@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import AvailabilityBadge from "@/components/AvailabilityBadge";
-import WhatsAppChat from "@/components/WhatsAppChat";
+import TawkToChat from "@/components/TawkToChat";
 
 interface LayoutProps {
   children: ReactNode;
@@ -19,7 +19,7 @@ const Layout = ({ children }: LayoutProps) => {
       
       {/* Fixed Components */}
       <AvailabilityBadge />
-      <WhatsAppChat />
+      <TawkToChat />
     </div>
   );
 };
