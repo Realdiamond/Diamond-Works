@@ -1,5 +1,28 @@
 import Link from "next/link";
-import { Globe, Search, Palette, Zap, ArrowRight, ShoppingCart, TrendingUp, Code, FileCode, BarChart3, MapPin, Settings, Sparkles, CheckCircle } from "lucide-react";
+import { 
+  Globe, 
+  Search, 
+  Palette, 
+  Zap, 
+  ArrowRight, 
+  ShoppingCart, 
+  TrendingUp, 
+  Code, 
+  FileCode, 
+  BarChart3, 
+  MapPin, 
+  Settings, 
+  Sparkles, 
+  CheckCircle,
+  Target,
+  Rocket,
+  Lightbulb,
+  Smartphone,
+  Monitor,
+  Mail,
+  Lock,
+  LucideIcon
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { client } from "@/sanity/lib/client";
 
@@ -23,33 +46,27 @@ async function getServices() {
   return services;
 }
 
-const iconMap: any = {
-  "globe": Globe,
-  "Globe": Globe,
-  "search": Search,
-  "Search": Search,
-  "palette": Palette,
-  "Palette": Palette,
-  "zap": Zap,
-  "Zap": Zap,
-  "shopping-cart": ShoppingCart,
-  "ShoppingCart": ShoppingCart,
-  "trending-up": TrendingUp,
-  "TrendingUp": TrendingUp,
-  "code": Code,
-  "Code": Code,
-  "file-code": FileCode,
-  "FileCode": FileCode,
-  "bar-chart-3": BarChart3,
-  "BarChart3": BarChart3,
-  "map-pin": MapPin,
-  "MapPin": MapPin,
-  "settings": Settings,
-  "Settings": Settings,
-  "sparkles": Sparkles,
-  "Sparkles": Sparkles,
-  "check-circle": CheckCircle,
-  "CheckCircle": CheckCircle,
+const iconMap: Record<string, LucideIcon> = {
+  Globe,
+  Search,
+  Palette,
+  Zap,
+  ShoppingCart,
+  TrendingUp,
+  Code,
+  FileCode,
+  BarChart3,
+  MapPin,
+  Settings,
+  Sparkles,
+  CheckCircle,
+  Target,
+  Rocket,
+  Lightbulb,
+  Smartphone,
+  Monitor,
+  Mail,
+  Lock,
 };
 
 // Fallback gradients for services
@@ -92,9 +109,10 @@ export default async function ServicesGrid() {
             const serviceGradient = getServiceGradient(service.title, service.gradient);
             
             return (
-              <div
+              <Link
                 key={service._id}
-                className="group relative glass-card p-8 hover:shadow-elevated transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+                href={`/services#${service.id?.current || service._id}`}
+                className="group relative glass-card p-8 hover:shadow-elevated transition-all duration-500 hover:-translate-y-2 overflow-hidden block cursor-pointer"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Gradient Background on Hover */}
@@ -119,32 +137,33 @@ export default async function ServicesGrid() {
                   {/* Features List */}
                   {service.subServices && service.subServices.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {service.subServices.slice(0, 4).map((feature: string) => (
-                        <span
-                          key={feature}
-                          className="px-3 py-1.5 bg-secondary text-foreground text-xs font-medium rounded-lg border border-border/50"
-                        >
-                          {feature}
-                        </span>
-                      ))}
+                      {service.subServices.slice(0, 4).map((sub: any) => {
+                        const SubIcon = iconMap[sub.icon] || Code;
+                        return (
+                          <span
+                            key={sub._key}
+                            className="flex items-center gap-1.5 px-3 py-1.5 bg-secondary text-foreground text-xs font-medium rounded-lg border border-border/50"
+                          >
+                            <SubIcon className="w-3.5 h-3.5 text-accent" />
+                            {sub.name}
+                          </span>
+                        );
+                      })}
                     </div>
                   )}
 
                   {/* CTA */}
-                  <Link
-                    href={`/services#${service.id?.current || service._id}`}
-                    className="inline-flex items-center gap-2 text-accent font-semibold group-hover:gap-4 transition-all"
-                  >
+                  <div className="inline-flex items-center gap-2 text-accent font-semibold group-hover:gap-4 transition-all">
                     Learn More
                     <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  </div>
                 </div>
 
                 {/* Corner Decoration */}
                 <div className="absolute top-0 right-0 w-32 h-32 opacity-0 group-hover:opacity-10 transition-opacity duration-500">
                   <div className={`w-full h-full bg-gradient-to-br ${serviceGradient} rounded-full blur-3xl`} />
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

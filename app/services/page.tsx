@@ -3,6 +3,7 @@ import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import CTA from "@/components/sections/CTA";
 import { generateSEO } from '@/lib/seo';
+import { client } from "@/sanity/lib/client";
 import { 
   ArrowRight, 
   Globe, 
@@ -16,8 +17,41 @@ import {
   MapPin,
   Settings,
   Zap,
-  Sparkles
+  Sparkles,
+  Target,
+  Rocket,
+  Lightbulb,
+  Smartphone,
+  Monitor,
+  ShoppingCart,
+  Mail,
+  Lock,
+  LucideIcon
 } from "lucide-react";
+
+// Icon mapping for dynamic rendering
+const iconMap: Record<string, LucideIcon> = {
+  Globe,
+  Search,
+  Palette,
+  TrendingUp,
+  Code,
+  FileCode,
+  BarChart3,
+  MapPin,
+  Settings,
+  Zap,
+  Sparkles,
+  CheckCircle,
+  Target,
+  Rocket,
+  Lightbulb,
+  Smartphone,
+  Monitor,
+  ShoppingCart,
+  Mail,
+  Lock,
+};
 
 export const metadata = generateSEO({
   title: 'Our Services',
@@ -26,98 +60,55 @@ export const metadata = generateSEO({
   canonical: 'https://realdiamond-digital.vercel.app/services',
 });
 
-const services = [
-  {
-    id: "web-development",
-    icon: Globe,
-    title: "Web Design & Development",
-    tagline: "Custom websites that convert visitors into customers",
-    problem: "Your website is often the first impression potential customers have of your business. An outdated, slow, or poorly designed website costs you leads and damages your credibility.",
-    solution: "We design and build modern, fast-loading websites that communicate your value proposition clearly and guide visitors toward taking action.",
-    benefits: [
-      "Custom designs tailored to your brand and goals",
-      "Mobile-responsive layouts for all devices",
-      "Fast loading speeds for better user experience",
-      "Conversion-optimized page structures",
-      "Easy-to-manage content systems",
-    ],
-    bestFor: "Businesses ready to invest in a professional online presence that actively generates leads.",
-    subServices: [
-      { icon: Code, name: "Custom Web Development" },
-      { icon: FileCode, name: "WordPress Websites" },
-      { icon: Settings, name: "Website Maintenance" },
-    ],
-    gradient: "from-accent to-cyan-400",
-  },
-  {
-    id: "seo",
-    icon: Search,
-    title: "SEO & Online Visibility",
-    tagline: "Get found by customers actively searching for your services",
-    problem: "Without proper SEO, your website is invisible to the people who need your services most. You're losing business to competitors who rank higher in search results.",
-    solution: "We implement comprehensive SEO strategies that improve your search rankings, increase organic traffic, and bring qualified leads to your website.",
-    benefits: [
-      "Higher rankings for your target keywords",
-      "Increased organic traffic from search engines",
-      "Better visibility in local search results",
-      "Improved website structure for search engines",
-      "Ongoing optimization and reporting",
-    ],
-    bestFor: "Businesses wanting sustainable, long-term growth through organic search traffic.",
-    subServices: [
-      { icon: BarChart3, name: "On-Page SEO" },
-      { icon: Settings, name: "Technical SEO" },
-      { icon: MapPin, name: "Local SEO" },
-    ],
-    gradient: "from-accent-secondary to-pink-400",
-  },
-  {
-    id: "design",
-    icon: Palette,
-    title: "Brand & Visual Design",
-    tagline: "Professional design that communicates your value",
-    problem: "Inconsistent or amateur visuals undermine your credibility. When your brand looks unprofessional, potential customers question the quality of your services.",
-    solution: "We create cohesive visual identities and professional designs that communicate competence, build trust, and make your brand memorable.",
-    benefits: [
-      "Consistent brand identity across all touchpoints",
-      "Professional graphics that build credibility",
-      "Designs that communicate your unique value",
-      "Visual systems that scale with your business",
-      "Marketing materials that convert",
-    ],
-    bestFor: "Businesses looking to establish or refresh their visual identity for a more professional market position.",
-    subServices: [
-      { icon: Palette, name: "Logo & Brand Identity" },
-      { icon: FileCode, name: "Marketing Materials" },
-      { icon: Globe, name: "Social Media Graphics" },
-    ],
-    gradient: "from-orange-400 to-amber-400",
-  },
-  {
-    id: "growth",
-    icon: TrendingUp,
-    title: "Growth & Optimization",
-    tagline: "Continuous improvement for better business results",
-    problem: "A website launch is just the beginning. Without ongoing optimization, your site's performance plateaus and you miss opportunities to improve conversion rates.",
-    solution: "We implement data-driven optimization strategies that continuously improve your website's performance, user experience, and conversion rates over time.",
-    benefits: [
-      "Data-driven decisions based on real user behavior",
-      "Improved website speed and performance",
-      "Higher conversion rates through testing",
-      "Regular performance monitoring and reporting",
-      "Strategic recommendations for growth",
-    ],
-    bestFor: "Established businesses ready to maximize the return on their digital investments.",
-    subServices: [
-      { icon: Zap, name: "Performance Optimization" },
-      { icon: BarChart3, name: "Conversion Rate Optimization" },
-      { icon: Settings, name: "Website Audits" },
-    ],
-    gradient: "from-green-400 to-emerald-400",
-  },
-];
+interface SubService {
+  _key: string;
+  name: string;
+  icon: string;
+}
 
-const Services = () => {
+interface Service {
+  _id: string;
+  id: {
+    current: string;
+  };
+  title: string;
+  tagline: string;
+  icon: string;
+  problem: string;
+  solution: string;
+  benefits: string[];
+  bestFor: string;
+  subServices: SubService[];
+  gradient: string;
+  order: number;
+}
+
+async function getServices(): Promise<Service[]> {
+  const services = await client.fetch<Service[]>(
+    `*[_type == "service"] | order(order asc) {
+      _id,
+      id,
+      title,
+      tagline,
+      icon,
+      problem,
+      solution,
+      benefits,
+      bestFor,
+      subServices,
+      gradient,
+      order
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
+    }
+  );
+  return services;
+}
+
+const Services = async () => {
+  const services = await getServices();
   return (
     <Layout>
       {/* Hero */}
@@ -149,10 +140,13 @@ const Services = () => {
       <section className="py-20 bg-background">
         <div className="container-wide">
           <div className="space-y-24">
-            {services.map((service, index) => (
+            {services.map((service, index) => {
+              const ServiceIcon = iconMap[service.icon] || Globe;
+              
+              return (
               <div
-                key={service.id}
-                id={service.id}
+                key={service.id.current}
+                id={service.id.current}
                 className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-start ${
                   index % 2 === 1 ? "lg:flex-row-reverse" : ""
                 }`}
@@ -160,7 +154,7 @@ const Services = () => {
                 {/* Content */}
                 <div className={index % 2 === 1 ? "lg:order-2" : ""}>
                   <div className={`w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center mb-6`}>
-                    <service.icon className="w-8 h-8 text-accent-foreground" />
+                    <ServiceIcon className="w-8 h-8 text-accent-foreground" />
                   </div>
                   <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-3">
                     {service.title}
@@ -194,12 +188,15 @@ const Services = () => {
                   <div className="mb-8">
                     <h4 className="font-semibold text-foreground mb-3">Includes</h4>
                     <div className="flex flex-wrap gap-3">
-                      {service.subServices.map((sub) => (
-                        <div key={sub.name} className="flex items-center gap-2 bg-secondary px-3 py-2 rounded-xl text-sm border border-border/50">
-                          <sub.icon className="w-4 h-4 text-accent" />
-                          <span className="text-foreground">{sub.name}</span>
-                        </div>
-                      ))}
+                      {service.subServices.map((sub) => {
+                        const SubIcon = iconMap[sub.icon] || Code;
+                        return (
+                          <div key={sub._key} className="flex items-center gap-2 bg-secondary px-3 py-2 rounded-xl text-sm border border-border/50">
+                            <SubIcon className="w-4 h-4 text-accent" />
+                            <span className="text-foreground">{sub.name}</span>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
 
@@ -217,7 +214,8 @@ const Services = () => {
                   </Button>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
