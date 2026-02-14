@@ -9,8 +9,8 @@ import TestimonialsShowcaseWrapper from "@/components/sections/TestimonialsShowc
 import BlogSection from "@/components/sections/BlogSection";
 import FinalCTA from "@/components/sections/FinalCTA";
 
-// Static with on-demand revalidation via webhook
-export const revalidate = false;
+// Revalidate every 60 seconds + on-demand via webhook
+export const revalidate = 60;
 
 export default function Home() {
   return (

@@ -27,8 +27,8 @@ import { Button } from "@/components/ui/button";
 import { client } from "@/sanity/lib/client";
 
 async function getServices() {
-  const services = await client.fetch(`
-    *[_type == "service" && featured == true] | order(coalesce(order, 999) asc) {
+  const services = await client.fetch(
+    `*[_type == "service" && featured == true] | order(coalesce(order, 999) asc) {
       _id,
       id,
       title,
@@ -41,8 +41,12 @@ async function getServices() {
       subServices,
       gradient,
       order
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
     }
-  `);
+  );
   return services;
 }
 
