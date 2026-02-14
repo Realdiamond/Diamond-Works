@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   description: 'Hear from our satisfied clients. Real results, real testimonials from businesses we\'ve helped grow.',
 };
 
+// Time-based ISR (60s) + on-demand revalidation via webhook
+export const revalidate = 60;
+
 // Define types
 interface TestimonialData {
   _id: string;
@@ -55,7 +58,11 @@ async function getTestimonials() {
       rating,
       "image": image.asset->{url},
       order
-    }`
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
+    }
   );
 
   const videoTestimonials = await client.fetch<TestimonialData[]>(
@@ -72,7 +79,11 @@ async function getTestimonials() {
       videoDuration,
       videoTitle,
       order
-    }`
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
+    }
   );
 
   return { textTestimonials, videoTestimonials };

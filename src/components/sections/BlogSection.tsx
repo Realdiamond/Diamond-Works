@@ -5,8 +5,8 @@ import { client } from "@/sanity/lib/client";
 import { calculateReadTime } from '@/lib/readtime';
 
 async function getRecentPosts() {
-  const posts = await client.fetch(`
-    *[_type == "blog"] | order(publishedDate desc) [0...3] {
+  const posts = await client.fetch(
+    `*[_type == "blog"] | order(publishedDate desc) [0...3] {
       _id,
       title,
       "slug": slug.current,
@@ -15,8 +15,12 @@ async function getRecentPosts() {
       "category": category->title,
       publishedDate,
       "image": image.asset->url
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
     }
-  `);
+  );
   return posts;
 }
 

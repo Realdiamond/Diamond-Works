@@ -2,15 +2,19 @@ import { client } from "@/sanity/lib/client";
 import { urlForImage } from "@/sanity/lib/image";
 
 async function getCompanyLogos() {
-  const logos = await client.fetch(`
-    *[_type == "companyLogo"] | order(coalesce(order, 999) asc) {
+  const logos = await client.fetch(
+    `*[_type == "companyLogo"] | order(coalesce(order, 999) asc) {
       _id,
       name,
       initials,
       logo,
       website
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
     }
-  `);
+  );
   return logos;
 }
 

@@ -2,8 +2,8 @@ import { client } from "@/sanity/lib/client";
 import TestimonialsShowcase from "./TestimonialsShowcase";
 
 async function getTestimonials() {
-  const testimonials = await client.fetch(`
-    *[_type == "testimonial" && featured == true] | order(coalesce(order, 999) asc) {
+  const testimonials = await client.fetch(
+    `*[_type == "testimonial" && featured == true] | order(coalesce(order, 999) asc) {
       _id,
       quote,
       author,
@@ -12,8 +12,12 @@ async function getTestimonials() {
       "image": image.asset->url,
       result,
       rating
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
     }
-  `);
+  );
   return testimonials;
 }
 

@@ -14,8 +14,8 @@ export const metadata = generateSEO({
 });
 
 async function getBlogPosts() {
-  const posts = await client.fetch(`
-    *[_type == "blog"] | order(publishedDate desc) {
+  const posts = await client.fetch(
+    `*[_type == "blog"] | order(publishedDate desc) {
       _id,
       title,
       "slug": slug.current,
@@ -26,24 +26,32 @@ async function getBlogPosts() {
       publishedDate,
       "image": image.asset->url,
       featured
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
     }
-  `);
+  );
   return posts;
 }
 
 async function getCategories() {
-  const categories = await client.fetch(`
-    *[_type == "category"] | order(coalesce(order, 999) asc) {
+  const categories = await client.fetch(
+    `*[_type == "category"] | order(coalesce(order, 999) asc) {
       _id,
       title,
       "slug": slug.current
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
     }
-  `);
+  );
   return categories;
 }
 
-// Static with on-demand revalidation via webhook
-export const revalidate = false;
+// Time-based ISR (60s) + on-demand revalidation via webhook
+export const revalidate = 60;
 
 export default async function Blog() {
   const blogPosts = await getBlogPosts();

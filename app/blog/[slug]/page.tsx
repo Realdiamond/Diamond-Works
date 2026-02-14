@@ -25,7 +25,10 @@ async function getBlogPost(slug: string) {
       metaDescription,
       metaKeywords
     }`,
-    { slug }
+    { slug },
+    {
+      next: { revalidate: 60 }
+    }
   );
   return post;
 }
@@ -54,12 +57,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 export async function generateStaticParams() {
-  const posts = await client.fetch(`*[_type == "blog"] { "slug": slug.current }`);
+  const posts = await client.fetch(
+    `*[_type == "blog"] { "slug": slug.current }`,
+    {},
+    {
+      next: { revalidate: 60 }
+    }
+  );
   return posts.map((post: any) => ({ slug: post.slug }));
 }
 
-// Static with on-demand revalidation via webhook
-export const revalidate = false;
+// Time-based ISR (60s) + on-demand revalidation via webhook
+export const revalidate = 60;
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

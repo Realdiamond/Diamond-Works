@@ -8,14 +8,18 @@ import { HelpCircle } from "lucide-react";
 import { client } from "@/sanity/lib/client";
 
 async function getFAQs() {
-  const faqs = await client.fetch(`
-    *[_type == "faq" && active == true] | order(coalesce(order, 999) asc) {
+  const faqs = await client.fetch(
+    `*[_type == "faq" && active == true] | order(coalesce(order, 999) asc) {
       _id,
       question,
       answer,
       category
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
     }
-  `);
+  );
   return faqs;
 }
 

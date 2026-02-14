@@ -5,21 +5,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://realdiamond-digital.vercel.app';
 
   // Get all blog posts
-  const blogPosts = await client.fetch(`
-    *[_type == "blog"] {
+  const blogPosts = await client.fetch(
+    `*[_type == "blog"] {
       "slug": slug.current,
       publishedDate,
       _updatedAt
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
     }
-  `);
+  );
 
   // Get all projects
-  const projects = await client.fetch(`
-    *[_type == "project"] {
+  const projects = await client.fetch(
+    `*[_type == "project"] {
       "slug": slug.current,
       _updatedAt
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
     }
-  `);
+  );
 
   // Static pages
   const staticPages = [

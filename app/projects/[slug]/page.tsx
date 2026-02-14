@@ -29,19 +29,26 @@ async function getProject(slug: string) {
       featured,
       order
     }`,
-    { slug }
+    { slug },
+    {
+      next: { revalidate: 60 }
+    }
   );
   return project;
 }
 
 async function getAdjacentProjects(currentSlug: string) {
-  const allProjects = await client.fetch(`
-    *[_type == "project"] | order(coalesce(order, 999) asc) {
+  const allProjects = await client.fetch(
+    `*[_type == "project"] | order(coalesce(order, 999) asc) {
       "slug": slug.current,
       title,
       "image": image.asset->url
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
     }
-  `);
+  );
   
   const currentIndex = allProjects.findIndex((p: any) => p.slug === currentSlug);
   const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
@@ -50,8 +57,8 @@ async function getAdjacentProjects(currentSlug: string) {
   return { nextProject, prevProject };
 }
 
-// Static with on-demand revalidation via webhook
-export const revalidate = false;
+// Time-based ISR (60s) + on-demand revalidation via webhook
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -80,7 +87,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 export async function generateStaticParams() {
-  const projects = await client.fetch(`*[_type == "project"] { "slug": slug.current }`);
+  const projects = await client.fetch(
+    `*[_type == "project"] { "slug": slug.current }`,
+    {},
+    {
+      next: { revalidate: 60 }
+    }
+  );
   return projects.map((project: any) => ({ slug: project.slug }));
 }
 

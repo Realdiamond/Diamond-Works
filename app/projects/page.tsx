@@ -12,8 +12,8 @@ export const metadata = generateSEO({
 });
 
 async function getProjects() {
-  const projects = await client.fetch(`
-    *[_type == "project"] | order(coalesce(order, 999) asc) {
+  const projects = await client.fetch(
+    `*[_type == "project"] | order(coalesce(order, 999) asc) {
       _id,
       title,
       "slug": slug.current,
@@ -25,13 +25,17 @@ async function getProjects() {
       duration,
       featured,
       order
+    }`,
+    {},
+    {
+      next: { revalidate: 60 }
     }
-  `);
+  );
   return projects;
 }
 
-// Static with on-demand revalidation via webhook
-export const revalidate = false;
+// Time-based ISR (60s) + on-demand revalidation via webhook
+export const revalidate = 60;
 
 const serviceCategories = [
   { id: "all", name: "All Projects" },
