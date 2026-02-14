@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Globe, Search, Palette, Zap, ArrowRight, ShoppingCart, TrendingUp } from "lucide-react";
+import { Globe, Search, Palette, Zap, ArrowRight, ShoppingCart, TrendingUp, Code, FileCode, BarChart3, MapPin, Settings, Sparkles, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { client } from "@/sanity/lib/client";
 
@@ -7,6 +7,7 @@ async function getServices() {
   const services = await client.fetch(`
     *[_type == "service" && featured == true] | order(coalesce(order, 999) asc) {
       _id,
+      id,
       title,
       tagline,
       icon,
@@ -24,11 +25,31 @@ async function getServices() {
 
 const iconMap: any = {
   "globe": Globe,
+  "Globe": Globe,
   "search": Search,
+  "Search": Search,
   "palette": Palette,
+  "Palette": Palette,
   "zap": Zap,
+  "Zap": Zap,
   "shopping-cart": ShoppingCart,
+  "ShoppingCart": ShoppingCart,
   "trending-up": TrendingUp,
+  "TrendingUp": TrendingUp,
+  "code": Code,
+  "Code": Code,
+  "file-code": FileCode,
+  "FileCode": FileCode,
+  "bar-chart-3": BarChart3,
+  "BarChart3": BarChart3,
+  "map-pin": MapPin,
+  "MapPin": MapPin,
+  "settings": Settings,
+  "Settings": Settings,
+  "sparkles": Sparkles,
+  "Sparkles": Sparkles,
+  "check-circle": CheckCircle,
+  "CheckCircle": CheckCircle,
 };
 
 // Fallback gradients for services
@@ -111,7 +132,7 @@ export default async function ServicesGrid() {
 
                   {/* CTA */}
                   <Link
-                    href="/services"
+                    href={`/services#${service.id?.current || service._id}`}
                     className="inline-flex items-center gap-2 text-accent font-semibold group-hover:gap-4 transition-all"
                   >
                     Learn More
