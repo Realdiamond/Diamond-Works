@@ -57,7 +57,7 @@ const CTA = ({
                 </Link>
               </Button>
               <Button variant="hero-outline" size="xl" asChild>
-                <Link href="/portfolio">
+                <Link href="/projects">
                   View Our Work
                 </Link>
               </Button>

@@ -7,8 +7,8 @@ import { generateSEO } from "@/lib/seo";
 
 export const metadata = generateSEO({
   title: "Community Tech Skills Program",
-  description: "Hands-on web development and WordPress training for students in Owo and surrounding communities.",
-  keywords: ["community training", "web development", "wordpress", "student tech skills", "Owo"],
+  description: "Hands-on web development and WordPress training for students through remote, live sessions.",
+  keywords: ["community training", "web development", "wordpress", "student tech skills", "remote learning"],
   canonical: "https://realdiamonddigital.studio/community",
 });
 
@@ -30,8 +30,8 @@ const highlights = [
   },
   {
     icon: MapPin,
-    title: "Owo On-Site",
-    description: "I can come down to Owo for in-person training when scheduled with the school.",
+    title: "Remote Delivery",
+    description: "Live online sessions that reach students wherever they are.",
   },
 ];
 
@@ -65,7 +65,7 @@ const CommunityPage = () => {
             <p className="text-xl text-muted-foreground leading-relaxed">
               This program is built to help students gain practical digital skills they can show in a school
               manifesto or future portfolio. The focus is on web development and WordPress, with hands-on
-              projects that build confidence and real-world ability.
+              projects, live sessions, and guided practice that build confidence and real-world ability.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Button className="bg-gradient-to-r from-accent to-accent-secondary hover:shadow-glow text-white font-semibold" asChild>
@@ -97,15 +97,16 @@ const CommunityPage = () => {
                 </p>
                 <p>
                   Scheduling, class size, and support can be adjusted based on the school calendar. If a sponsor
-                  is involved, we can align the format to the school’s goals and available time.
+                  is involved, we can align the format to the school’s goals and available time. Live session
+                  hours are agreed in advance so students can attend consistently.
                 </p>
               </div>
             </div>
 
             <div className="glass-card p-8 space-y-6">
               {[
-                { icon: MapPin, title: "Location", desc: "Owo (on-site sessions available)" },
-                { icon: Clock, title: "Schedule", desc: "Flexible timing to fit school calendar" },
+                { icon: MapPin, title: "Location", desc: "Remote (live online sessions)" },
+                { icon: Clock, title: "Live Hours", desc: "Set times agreed with the school" },
                 { icon: Users, title: "Audience", desc: "Secondary school students and youth groups" },
               ].map((item) => (
                 <div key={item.title} className="flex items-start gap-4">
